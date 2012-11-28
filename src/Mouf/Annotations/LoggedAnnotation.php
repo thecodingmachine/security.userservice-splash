@@ -1,5 +1,12 @@
 <?php
-namespace Mouf\Security\Splash;
+namespace Mouf\Annotations;
+
+use Mouf\MoufManager;
+
+use Mouf\Mvc\Splash\Filters\AbstractFilter;
+
+use Mouf\Mvc\Splash\Services\FilterUtils;
+
 
 // FIXME: HOW TO REGISTER THIS???
 FilterUtils::registerFilter("Logged");
