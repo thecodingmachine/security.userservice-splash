@@ -25,7 +25,7 @@ class LoggedAnnotation extends AbstractFilter
 {
 	
 	public function __construct($value) {
-		$this->value = trim($value, " (\"'");
+		$this->value = trim($value, " (\"')");
 	}
 	
 	/**
