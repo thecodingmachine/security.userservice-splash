@@ -8,15 +8,15 @@ use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * The @Logged filter should be used to check whether a user is logged or not.
- * It will try to do so by using the "UnauthorizedMidleware::class" instance.
+ * It will try to do so by using the "Unauthorizedmiddleware::class" instance.
  * 
  * You can pass an additional parameter to overide the name of the instance.
- * For instance: @Logged(midlewareName = "myUnauthorizedMidleware")
+ * For instance: @Logged(middlewareName = "myUnauthorizedmiddleware")
  *
  *
  * @Annotation
  * @Attributes({
- *   @Attribute("midlewareName", type = "string"),
+ *   @Attribute("middlewareName", type = "string"),
  * })
  */
 class Logged
@@ -24,32 +24,34 @@ class Logged
     /**
      * The value passed to the filter.
      */
-    protected $midlewareName;
+    protected $middlewareName;
 
     /**
      * Logged constructor.
+     *
      * @param array $values
      */
     public function __construct(array $values)
     {
-        if (!isset($values['midlewareName'])) {
-            $values['midlewareName'] = UnauthorizedMidleware::class;
+        if (!isset($values['middlewareName'])) {
+            $values['middlewareName'] = UnauthorizedMiddleware::class;
         }
-        $this->midlewareName = $values['midlewareName'];
+        $this->middlewareName = $values['middlewareName'];
     }
 
     /**
      * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
-     * @param callable $next
-     * @param ContainerInterface $container
+     * @param ResponseInterface      $response
+     * @param callable               $next
+     * @param ContainerInterface     $container
+     *
      * @return ResponseInterface
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next, ContainerInterface $container)
     {
-        $midlewareName = $container->get($this->midlewareName);
+        $middlewareName = $container->get($this->middlewareName);
 
-        $response = $midlewareName($request, $response, $next);
+        $response = $middlewareName($request, $response, $next);
 
         return $response;
     }

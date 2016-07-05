@@ -26,7 +26,7 @@ public function index() { ... }
  * A sample default action that requires to be logged.
  *
  * @URL ("/homepage")
- * @Logged(midlewareName = "myUnauthorizedMidleware")
+ * @Logged(middlewareName = "myUnauthorizedMiddleware")
  */
 public function index() { ... }
 ```
