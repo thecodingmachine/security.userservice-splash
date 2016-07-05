@@ -10,7 +10,7 @@ use Mouf\Security\UserService\UserServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class UnauthorizedMidleware
+class UnauthorizedMiddleware
 {
     /**
      * @var UserServiceInterface
