@@ -30,6 +30,7 @@ class UnauthorizedMiddleware
     public function __construct(UserServiceInterface $userService, LoginController $loginController)
     {
         $this->userService = $userService;
+        $this->loginController = $loginController;
     }
 
     /**
