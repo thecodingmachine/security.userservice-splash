@@ -51,7 +51,7 @@ class Logged
     {
         $middlewareName = $container->get($this->middlewareName);
 
-        $response = $middlewareName($request, $response, $next);
+        $response = $middlewareName($request, $response, $next, $container);
 
         return $response;
     }
