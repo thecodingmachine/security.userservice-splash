@@ -3,15 +3,16 @@
 namespace Mouf\Security\Controllers;
 
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 
 interface LoginController
 {
     /**
-     * @param string|null       $login
-     * @param UriInterface|null $redirect
+     * Displays a login page.
      *
+     * @param ServerRequestInterface $request
      * @return ResponseInterface
      */
-    public function loginPage(string $login = null, UriInterface $redirect = null) :ResponseInterface;
+    public function loginPage(ServerRequestInterface $request) : ResponseInterface;
 }
