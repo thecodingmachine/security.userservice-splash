@@ -30,8 +30,7 @@ class UnauthorizedMiddlewareInstaller implements PackageInstallerInterface
 
         // These instances are expected to exist when the installer is run.
         $userService = $moufManager->getInstanceDescriptor('userService');
-        $simpleLoginController = $moufManager->getInstanceDescriptor('simpleLoginController');
-
+        
         // Let's create the instances.
         $unauthorizedMiddleWare = InstallUtils::getOrCreateInstance('Mouf\\Security\\UnauthorizedMiddleware', 'Mouf\\Security\\UnauthorizedMiddleware', $moufManager);
 
@@ -39,7 +38,8 @@ class UnauthorizedMiddlewareInstaller implements PackageInstallerInterface
         if (!$unauthorizedMiddleWare->getConstructorArgumentProperty('userService')->isValueSet()) {
             $unauthorizedMiddleWare->getConstructorArgumentProperty('userService')->setValue($userService);
         }
-        if (!$unauthorizedMiddleWare->getConstructorArgumentProperty('loginController')->isValueSet()) {
+        if (!$unauthorizedMiddleWare->getConstructorArgumentProperty('loginController')->isValueSet() && $moufManager->has('simpleLoginController')) {
+            $simpleLoginController = $moufManager->getInstanceDescriptor('simpleLoginController');
             $unauthorizedMiddleWare->getConstructorArgumentProperty('loginController')->setValue($simpleLoginController);
         }
 
