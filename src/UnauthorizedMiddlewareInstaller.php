@@ -24,8 +24,6 @@ class UnauthorizedMiddlewareInstaller implements PackageInstallerInterface
      */
     public static function install(MoufManager $moufManager)
     {
-        RendererUtils::createPackageRenderer($moufManager, 'mouf/security.simplelogincontroller');
-
         $moufManager = MoufManager::getMoufManager();
 
         // These instances are expected to exist when the installer is run.
