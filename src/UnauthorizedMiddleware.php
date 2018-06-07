@@ -45,7 +45,11 @@ class UnauthorizedMiddleware
     {
         $is_logged = $this->userService->isLogged();
         if (!$is_logged) {
-            return $this->loginController->loginPage($request)->withStatus(401);
+            $response = $this->loginController->loginPage($request);
+            if($response->getStatusCode() === 200) {
+                $response->withStatus(401);
+            }
+            return $response;
         }
         $response = $next($request, $response, $next);
 
