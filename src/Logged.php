@@ -2,9 +2,11 @@
 
 namespace Mouf\Security;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use TheCodingMachine\Splash\Filters\FilterInterface;
 
 /**
  * The @Logged filter should be used to check whether a user is logged or not.
@@ -19,7 +21,7 @@ use Psr\Http\Message\ServerRequestInterface;
  *   @Attribute("middlewareName", type = "string"),
  * })
  */
-class Logged
+class Logged implements FilterInterface
 {
     /**
      * The value passed to the filter.
@@ -47,12 +49,10 @@ class Logged
      *
      * @return ResponseInterface
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next, ContainerInterface $container)
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler, ContainerInterface $container): ResponseInterface
     {
-        $middlewareName = $container->get($this->middlewareName);
-
-        $response = $middlewareName($request, $response, $next, $container);
-
-        return $response;
+        /* @var UnauthorizedMiddleware $middleware */
+        $middleware = $container->get($this->middlewareName);
+        return $middleware->process($request, $handler);
     }
 }
