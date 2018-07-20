@@ -51,7 +51,7 @@ class Logged implements FilterInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler, ContainerInterface $container): ResponseInterface
     {
-        /* @var UnauthorizedMiddleware $middleware */
+        /* @var UnauthorizedMiddlewareInterface $middleware */
         $middleware = $container->get($this->middlewareName);
         return $middleware->process($request, $handler);
     }

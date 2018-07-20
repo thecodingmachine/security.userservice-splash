@@ -9,7 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class UnauthorizedMiddleware implements MiddlewareInterface
+class UnauthorizedMiddleware implements UnauthorizedMiddlewareInterface
 {
     /**
      * @var UserServiceInterface
