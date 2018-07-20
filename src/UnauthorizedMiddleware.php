@@ -2,15 +2,14 @@
 
 namespace Mouf\Security;
 
-use Interop\Container\ContainerInterface;
-use Mouf\Html\HtmlElement\HtmlBlock;
-use Mouf\Html\Template\TemplateInterface;
 use Mouf\Security\Controllers\LoginController;
 use Mouf\Security\UserService\UserServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-class UnauthorizedMiddleware
+class UnauthorizedMiddleware implements UnauthorizedMiddlewareInterface
 {
     /**
      * @var UserServiceInterface
@@ -35,13 +34,10 @@ class UnauthorizedMiddleware
 
     /**
      * @param ServerRequestInterface $request
-     * @param ResponseInterface      $response
-     * @param callable               $next
-     * @param ContainerInterface     $container
-     *
+     * @param RequestHandlerInterface $handler
      * @return ResponseInterface
      */
-    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next, ContainerInterface $container)
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
     {
         $is_logged = $this->userService->isLogged();
         if (!$is_logged) {
@@ -51,8 +47,6 @@ class UnauthorizedMiddleware
             }
             return $response;
         }
-        $response = $next($request, $response, $next);
-
-        return $response;
+        return $handler->handle($request);
     }
 }
