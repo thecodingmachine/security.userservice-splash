@@ -43,7 +43,7 @@ class UnauthorizedMiddleware implements UnauthorizedMiddlewareInterface
         if (!$is_logged) {
             $response = $this->loginController->loginPage($request);
             if($response->getStatusCode() === 200) {
-                $response->withStatus(401);
+                $response = $response->withStatus(401);
             }
             return $response;
         }
