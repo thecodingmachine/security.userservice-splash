@@ -13,7 +13,7 @@ class UnauthorizedMiddlewareProvider extends ServiceProvider
     /**
      * @Factory()
      */
-    public function createUnauthorizedMiddleware(UserServiceInterface $userService, LoginController $loginController): UnauthorizedMiddleware
+    public static function createUnauthorizedMiddleware(UserServiceInterface $userService, LoginController $loginController): UnauthorizedMiddleware
     {
         return new UnauthorizedMiddleware($userService, $loginController);
     }
